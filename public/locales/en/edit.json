@@ -1,0 +1,30 @@
+{
+  "indexPages": {
+    "hiddenPages": "Hidden pages",
+    "addToken": "Add page",
+    "addGroup": "Add group",
+    "initialTokenName": "Page",
+    "initialGroupName": "Group",
+    "editPage": {
+      "title": "Edit Page",
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter page name",
+          "required": "Name is required"
+        },
+        "slug": {
+          "label": "Slug",
+          "placeholder": "Enter slug",
+          "required": "Slug is required",
+          "help": "The slug will be automatically generated from the name. You can also edit it manually.",
+          "exists": "This slug already exists"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Save"
+      }
+    }
+  }
+}

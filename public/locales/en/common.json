@@ -1,0 +1,19 @@
+{
+  "successModal": {
+    "title": "Success",
+    "done": "Done"
+  },
+  "switchNetwork": {
+    "title": "Switch network",
+    "description": "Connect your wallet to {{networkName}} to continue.",
+    "button": "Switch network"
+  },
+  "toasts": {
+    "walletRegistered": "Your wallet is registered",
+    "walletRegistrationFailed": "Wallet registration failed",
+    "merge": "Merge",
+    "siteUpdated": "Site updated",
+    "viewSite": "View site",
+    "merge_error": "An error occurred while merging"
+  }
+}

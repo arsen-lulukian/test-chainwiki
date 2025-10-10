@@ -1,0 +1,18 @@
+{
+  "updateContent": "Publish",
+  "cannotUpdateContentTooltip": "You need to have the Editor role",
+  "cancel": "Cancel",
+  "compare": "Compare selected revisions",
+  "retry": "Retry",
+  "edit": "Edit",
+  "save": "Save",
+  "delete": "Delete",
+  "chooseFile": "Choose file",
+  "publish": "Publish",
+  "settings": "Settings",
+  "visit": "Visit",
+  "enableBatchEditing": "Enable batch editing",
+  "setAttestator": "Set as preferred attestor",
+  "unsetAttestator": "Remove as preferred attestor",
+  "addLogo": "Add logo"
+}

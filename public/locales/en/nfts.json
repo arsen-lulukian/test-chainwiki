@@ -1,0 +1,14 @@
+{
+  "title": "Jump back in",
+  "subtitle": "Your most recent content",
+  "myNftsTitle": "My sites",
+  "filter": {
+    "all": "All",
+    "admin": "Admin",
+    "editor": "Editor"
+  },
+  "addNft": "Add site",
+  "roles": "Roles: ",
+  "noNfts": "Add a site to get started",
+  "openInExplorer": "Open in explorer"
+}

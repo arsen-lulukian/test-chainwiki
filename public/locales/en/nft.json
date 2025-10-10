@@ -1,0 +1,275 @@
+{
+  "tabs": {
+    "nft": "Site",
+    "tokens": "Pages",
+    "settings": "Settings",
+    "manageRoles": "Roles",
+    "history": "History"
+  },
+  "settings": {
+    "preferences": "Preferences",
+    "content": "Content",
+    "layout": "Layout",
+    "navigation": {
+      "general": {
+        "label": "General"
+      },
+      "roles": {
+        "label": "Roles"
+      },
+      "attestators": {
+        "label": "Attestors"
+      },
+      "ens": {
+        "label": "ENS Domain"
+      },
+      "integration": {
+        "label": "Integrations"
+      }
+    },
+    "siteName": {
+      "title": "Site title",
+      "subtitle": "Rename site",
+      "description": "Change the title of your website after it has been published."
+    },
+    "siteSlug": {
+      "title": "Site slug",
+      "subtitle": "Edit slug",
+      "description": "Change the slug of your site to make it easier to share and remember.",
+      "formPlaceholders": {
+        "slug": "Enter site URL (slug)"
+      },
+      "formErrors": {
+        "invalid": "Invalid slug (letters, numbers, dashes only)",
+        "exists": "Slug already exists"
+      }
+    },
+    "siteLink": {
+      "title": "Your site",
+      "description": "Share this link with your audience."
+    },
+    "smartContract": {
+      "title": "Smart contract",
+      "description": "The link to the smart contract which represents your site."
+    },
+    "icon": {
+      "title": "Icon",
+      "description": "A small image that represents your brand or app.",
+      "upload": "Upload icon"
+    },
+    "customLogo": {
+      "title": "Custom logo",
+      "description": "Your logo shown in the app interface."
+    },
+    "headerColor": {
+      "title": "Header color",
+      "description": "Select a new color for the header using the color picker"
+    },
+    "editHeaderLinks": {
+      "title": "Header",
+      "subtitle": "Navigation",
+      "description": "Create a navigation menu by adding links",
+      "placeholders": {
+        "title": "Title",
+        "link": "e.g., https://site.com"
+      },
+      "formErrors": {
+        "title": {
+          "required": "Please enter a title for link"
+        },
+        "link": {
+          "url": "Please enter a valid URL for link",
+          "required": "URL is required"
+        },
+        "minLinks": "Please add at least one link"
+      },
+      "buttonAddLink": "Add link"
+    },
+    "import": {
+      "title": "Import from GitBook",
+      "subtitle": "Import your site from a public GitHub-synced GitBook project",
+      "description": "Use GitHub repository to import pages from your GitBook workspace. You can select a specific branch, and the imported pages will be added directly to your ChainWiki site.",
+      "instructions": {
+        "title": "To prepare your Github repo for importing:",
+        "steps": {
+          "sync": "Sync Gitbook to Github: Follow instructions here: ",
+          "public": "Ensure your Github repo is Public"
+        }
+      },
+      "form": {
+        "username": "GitHub username",
+        "repoName": "Repository name",
+        "branchName": "Branch name",
+        "submit": "Import"
+      },
+      "formPlaceholders": {
+        "username": "Enter username",
+        "repoName": "Enter repository name",
+        "branchName": "Enter branch name (For example main, dev, etc...)"
+      },
+      "formErrors": {
+        "username": {
+          "required": "Username is required"
+        },
+        "repoName": {
+          "required": "Repository name is required"
+        },
+        "branchName": {
+          "required": "Branch name is required"
+        }
+      },
+      "toasts": {
+        "pagesImported": "Pages imported successfully",
+        "pagesImportFailed": "Pages import failed"
+      }
+    },
+    "linksColor": {
+      "title": "Links color",
+      "description": "Sets the color of the title links in the header"
+    },
+    "roleManager": {
+      "title": "Site roles",
+      "subtitle": "Manage site roles",
+      "description": "This page is dedicated to managing user roles within the site. It allows for the assignment and adjustment of roles to ensure proper access control and responsibility distribution across the team.",
+      "tableHead": {
+        "address": "Address",
+        "role": "Role"
+      },
+      "actions": {
+        "grantRole": "Grant role",
+        "revokeRole": "Revoke role"
+      },
+      "form": {
+        "grantRole": "Enter the user's Ethereum address to assign a role",
+        "role": "Role"
+      },
+      "formPlaceholders": {
+        "role": "Select role",
+        "name": "Enter username"
+      },
+      "formErrors": {
+        "to": {
+          "required": "User address is required",
+          "invalid": "User address is invalid"
+        },
+        "role": {
+          "required": "Role is required"
+        }
+      },
+      "messages": {
+        "editNft": "Edit site",
+        "you": "You"
+      },
+      "roles": {
+        "admin": "Admin",
+        "editor": "Editor",
+        "issuer": "Issuer"
+      }
+    },
+    "attestatorsManager": {
+      "title": "Manage preferred attestors",
+      "subtitle": "Highlight trusted voices across your site",
+      "description": "Select and manage preferred users whose attestations will appear at the top of relevant content and be marked with a checkmark icon. This feature helps surface trusted opinions and enhances credibility for your readers.",
+      "tableHead": {
+        "address": "Address"
+      },
+      "actions": {
+        "makePreferred": "Make preferred",
+        "removePreferred": "Remove preferred"
+      },
+      "formPlaceholders": {
+        "makePreferred": "Enter the user's Ethereum address",
+        "name": "Enter name (only visible to you)"
+      },
+      "formErrors": {
+        "address": {
+          "required": "User address is required",
+          "invalid": "User address is invalid"
+        }
+      },
+      "messages": {
+        "you": "You"
+      }
+    },
+    "ens": {
+      "title": "Connect ENS Domain",
+      "subtitle": "Link your ENS domain to your ChainWiki site",
+      "description": "Connect with the wallet that owns your ENS domain to link it to your ChainWiki site. Once configured, visiting your ENS domain will automatically redirect to your ChainWiki site.",
+      "slugInstruction": "Set your site slug to match your ENS domain (including .eth) so it’s clear the site belongs to you.",
+      "actions": {
+        "set": "Set ENS",
+        "updateSlug": "Update slug"
+      },
+      "formPlaceholders": {
+        "domain": "Enter your ENS domain"
+      },
+      "formErrors": {
+        "domain": {
+          "required": "User address is required",
+          "invalid": "Please enter a valid ENS domain (e.g., myname.eth)"
+        }
+      },
+      "messages": {
+        "notOwned": "You don't own this ENS domain",
+        "failed": "Failed to set ENS domain",
+        "success": "Successfully set ENS domain"
+      }
+    }
+  },
+  "createNft": {
+    "title": "Create site",
+    "form": {
+      "name": "Site name",
+      "symbol": "Site symbol",
+      "adminAddress": "Admin address",
+      "uri": "IPFS hash",
+      "editorAddress": "Editor address",
+      "submit": "Create",
+      "uploadLogo": "Upload logo",
+      "slug": "Site URL"
+    },
+    "formPlaceholders": {
+      "name": "Enter full name of the site",
+      "symbol": "Enter site symbol (e.g., ABC)",
+      "adminAddress": "Enter admin's Ethereum address",
+      "uri": "Paste IPFS hash or URI",
+      "editorAddress": "Enter editor's Ethereum address",
+      "slug": "Enter site URL (auto-generated from name)"
+    },
+    "formErrors": {
+      "name": {
+        "required": "Name is required"
+      },
+      "symbol": {
+        "required": "Symbol is required"
+      },
+      "admin": {
+        "required": "Admin address is required",
+        "invalid": "Admin address is invalid"
+      },
+      "editor": {
+        "required": "Editor address is required",
+        "invalid": "Editor address is invalid"
+      },
+      "slug": {
+        "required": "Site URL is required",
+        "invalid": "Invalid slug (letters, numbers, dashes only)",
+        "exists": "Slug already exists"
+      }
+    },
+    "successMessage": "Site created."
+  },
+  "indexPages": {
+    "noIndexPages": "No index pages yet",
+    "noTokens": "No pages yet",
+    "hiddenListTitle": "Hidden pages",
+    "noPagesInActiveList": "Move the pages you want to show here",
+    "noPagesInHiddenList": "Move the pages you want to hide here"
+  },
+  "card": {
+    "lastEdited": "Last edited {{date}}"
+  },
+  "messages": {
+    "noContent": "No content yet"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "header": {
+    "viewContract": "View smart contract"
+  },
+  "sidebar": {
+    "home": "Home",
+    "sites": "Sites",
+    "help": "Help",
+    "helpItems": {
+      "github": "GitHub Repository",
+      "changelog": "Smart Contract Changelog",
+      "docs": "Documentation"
+    },
+    "viewOnExplorer": "View on {{explorerName}}"
+  },
+  "siteMenu": {
+    "visitSite": "Visit site",
+    "copyUrl": "Copy URL",
+    "urlCopied": "URL copied to clipboard"
+  },
+  "customization": {
+    "basic": "Basic",
+    "title": "Site customization",
+    "tabs": {
+      "general": "General",
+      "layout": "Layout"
+    }
+  },
+  "poweredBy": "powered by",
+  "createdWithChainWiki": "Created with ChainWiki",
+  "noDataAvailable": "No data available",
+  "chooseNetwork": {
+    "home": "Home",
+    "title": "Select a Network",
+    "description": "This site exists on multiple networks. Please pick one to continue.",
+    "noNfts": "No site found on any network."
+  }
+}
