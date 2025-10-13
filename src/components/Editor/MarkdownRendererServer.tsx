@@ -1,14 +1,13 @@
 import 'highlight.js/styles/atom-one-dark.css'
 import md5 from 'md5'
 import React from 'react'
-import prod from 'react/jsx-runtime'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeRaw from 'rehype-raw'
-import rehypeReact from 'rehype-react'
-import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
+import rehypeRaw from 'rehype-raw'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeStringify from 'rehype-stringify'
 import { visit } from 'unist-util-visit'
 
 interface MarkdownRendererServerProps {
@@ -50,31 +49,16 @@ const MarkdownRendererServer = async ({
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeHighlight)
-    .use(rehypeReact, {
-      Fragment: prod.Fragment,
-      jsx: prod.jsx,
-      jsxs: prod.jsxs,
-      components: {
-        a: (props: any) => {
-          const { href, children, ...rest } = props
-          const isRelative = href?.startsWith('/')
-          return (
-            <a
-              {...rest}
-              {...(isRelative
-                ? { href }
-                : { target: '_blank', rel: 'noopener noreferrer' })}
-            >
-              {children}
-            </a>
-          )
-        },
-      },
-    })
+    .use(rehypeStringify) // <-- Генерируем чистый HTML
 
-  const file = processor.processSync(markdown)
+  const file = await processor.process(markdown)
 
-  return <div className='prose max-w-none'>{file.result}</div>
+  return (
+    <div
+      className="prose max-w-none"
+      dangerouslySetInnerHTML={{ __html: String(file) }}
+    />
+  )
 }
 
 export default MarkdownRendererServer
