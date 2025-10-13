@@ -1,13 +1,9 @@
 // ClientTokenViewer.tsx
-'use client'
-
-import { useState, useCallback } from 'react'
-import MarkdownRenderer from 'src/components/Editor/MarkdownRenderer'
-import AttestationDrawer from 'src/components/Token/Attestation/AttestationDrawer'
 import {
   NFTWithMetadata,
   TokensQueryFullData,
 } from 'src/shared/utils/ipfs/types'
+import MarkdownRendererServer from '../Editor/MarkdownRendererServer'
 
 interface Props {
   nft: NFTWithMetadata
@@ -15,28 +11,29 @@ interface Props {
 }
 
 export default function ClientTokenViewer({ nft, token }: Props) {
-  const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
-    null
-  )
+  // const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
+  //   null
+  // )
 
-  const handleSelectSection = useCallback((sectionId: string) => {
-    setSelectedSectionId(sectionId)
-  }, [])
+  // const handleSelectSection = useCallback((sectionId: string) => {
+  //   setSelectedSectionId(sectionId)
+  // }, [])
 
-  const handleCloseDrawer = useCallback(() => {
-    setSelectedSectionId(null)
-  }, [])
+  // const handleCloseDrawer = useCallback(() => {
+  //   setSelectedSectionId(null)
+  // }, [])
 
   return (
     <>
-      <MarkdownRenderer
+      {/* <MarkdownRenderer
         markdown={token.ipfsContent?.htmlContent || ''}
         showComments
         fullTokenId={token.id}
         onClickComment={handleSelectSection} // интерактивность
-      />
+      /> */}
+      <MarkdownRendererServer markdown={token.ipfsContent?.htmlContent || ''} />
 
-      <AttestationDrawer
+      {/* <AttestationDrawer
         nft={nft}
         isOpen={!!selectedSectionId}
         fullTokenId={token.id}
@@ -48,7 +45,7 @@ export default function ClientTokenViewer({ nft, token }: Props) {
             '',
         }}
         onClose={handleCloseDrawer}
-      />
+      /> */}
     </>
   )
 }
