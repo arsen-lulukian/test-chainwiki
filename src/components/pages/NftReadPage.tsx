@@ -1,94 +1,99 @@
-'use client'
-
-import { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useContentRef } from 'src/components/common/Layout/ReadLayout/Content/context'
-import MarkdownRenderer from 'src/components/Editor/MarkdownRenderer'
-import NftReadPageSkeleton from 'src/components/Nft/NftReadSkeleton'
-import AttestationDrawer from 'src/components/Token/Attestation/AttestationDrawer'
-import useNFT from 'src/hooks/subgraph/useNFT'
-import useToken from 'src/hooks/subgraph/useToken'
-import useFullTokenIdParam from 'src/hooks/useFullTokenIdParam'
-import useNFTIdParam from 'src/hooks/useNftIdParam'
+import { getNftBySlugOrAddress } from 'src/services/apollo/getNftBySlugOrAddress'
+import { getTokenBySlug } from 'src/services/apollo/getTokenBySlug'
+import { ReadParams } from 'src/shared/consts/routes'
 import { findFirstNonGroupVisibleNode } from 'src/shared/utils/treeHelpers'
-import useUpdateRouteToSlug from 'src/hooks/useUpdateRouteToSlug'
+import ClientTokenViewer from '../Token/ClientTokenViewer'
+import initTranslations from 'src/config/i18n/i18n'
 
-const NftReadPage = () => {
-  useUpdateRouteToSlug()
-  const { t } = useTranslation('nft')
-  const { nftId } = useNFTIdParam()
+const NftReadPage: React.FC<{
+  params?: Promise<ReadParams['token']>
+}> = async ({ params: paramsProp }) => {
+  // useUpdateRouteToSlug()
+  const params = await paramsProp
+  const nftIdOrSlug = params?.nftIdOrSlug || ''
+  const tokenIdOrSlug = params?.tokenIdOrSlug || ''
+  console.log(nftIdOrSlug, tokenIdOrSlug, 'PARAMS')
+  const { t } = await initTranslations('en', ['token'])
 
-  const fullTokenId = useFullTokenIdParam()
-  const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
-    null
+  const { nft } = await getNftBySlugOrAddress(nftIdOrSlug)
+  // const fullTokenId = useFullTokenIdParam()
+  // const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
+  //   null
+  // )
+
+  const firstToken = findFirstNonGroupVisibleNode(
+    nft?.indexPagesContent?.indexPages
   )
-  const { nft, loadingNft, refetchingNft } = useNFT(nftId, {
-    fetchFullData: true,
-    disableRefetch: true,
-  })
 
-  const firstTokenId = useMemo(
-    () =>
-      findFirstNonGroupVisibleNode(nft?.indexPagesContent?.indexPages)
-        ?.tokenId || '',
-    [nft?.indexPagesContent?.indexPages]
+  const { token } = await getTokenBySlug(
+    nft?.id || '',
+    tokenIdOrSlug || firstToken?.slug
   )
 
-  const tokenId = fullTokenId || firstTokenId
+  // const tokenId = token?.id || firstToken?.tokenId || ''
 
-  const { token, loadingToken, refetchingToken } = useToken(tokenId, {
-    disableRefetch: true,
-  })
+  // const markdown = token?.ipfsContent?.htmlContent
 
-  const markdown = token?.ipfsContent?.htmlContent
+  // console.log(token, 'TOKEN')
 
-  const { setContentElem } = useContentRef()
+  // const { setContentElem } = useContentRef()
 
-  const handleSelectSection = useCallback((sectionId: string) => {
-    setSelectedSectionId(sectionId)
-  }, [])
+  // const handleSelectSection = useCallback((sectionId: string) => {
+  // setSelectedSectionId(sectionId)
+  // }, [])
 
-  const handleCloseDrawer = () => {
-    setSelectedSectionId(null)
-  }
+  // const handleCloseDrawer = () => {
+  //   setSelectedSectionId(null)
+  // }
 
-  const loading =
-    (loadingNft && !refetchingNft) || (loadingToken && !refetchingToken)
+  // const loading =
+  //   (loadingNft && !refetchingNft) || (loadingToken && !refetchingToken)
 
-  if (loading) {
-    return <NftReadPageSkeleton />
-  }
+  // if (loading) {
+  //   return <NftReadPageSkeleton />
+  // }
 
-  if (!markdown) {
+  // if (!markdown) {
+  //   return <p className='text-center'>{t('messages.noContent')}</p>
+  // }
+
+  if (!nft || !token) {
     return <p className='text-center'>{t('messages.noContent')}</p>
   }
 
-  return (
-    <div>
-      <MarkdownRenderer
-        markdown={markdown}
-        showComments
-        ref={setContentElem}
-        onClickComment={handleSelectSection}
-        fullTokenId={tokenId}
-      />
+  return <ClientTokenViewer nft={nft} token={token} />
 
-      {nft && (
-        <AttestationDrawer
-          nft={nft}
-          isOpen={!!selectedSectionId}
-          fullTokenId={tokenId}
-          section={{
-            id: selectedSectionId,
-            htmlContent:
-              (selectedSectionId &&
-                document.getElementById(selectedSectionId)?.outerHTML) ||
-              '',
-          }}
-          onClose={handleCloseDrawer}
-        />
-      )}
-    </div>
-  )
+  // return (
+  //   <div>
+  //     <MarkdownRenderer
+  //       markdown={markdown}
+  //       showComments
+  //       // ref={setContentElem}
+  //       // onClickComment={handleSelectSection}
+  //       fullTokenId={tokenId}
+  //     />
+
+  //     {nft && (
+  //       <AttestationDrawer
+  //         nft={nft}
+  //         // isOpen={!!selectedSectionId}
+  //         isOpen={false}
+  //         fullTokenId={tokenId}
+  //         // section={{
+  //         //   id: selectedSectionId,
+  //         //   htmlContent:
+  //         //     (selectedSectionId &&
+  //         //       document.getElementById(selectedSectionId)?.outerHTML) ||
+  //         //     '',
+  //         // }}
+  //         section={{
+  //           id: '',
+  //           htmlContent: '',
+  //         }}
+  //         // onClose={handleCloseDrawer}
+  //       />
+  //     )}
+  //   </div>
+  // )
 }
 export default NftReadPage
