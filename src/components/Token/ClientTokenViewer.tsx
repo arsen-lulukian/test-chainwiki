@@ -1,9 +1,13 @@
-// ClientTokenViewer.tsx
+'use client'
+
 import {
   NFTWithMetadata,
   TokensQueryFullData,
 } from 'src/shared/utils/ipfs/types'
-import MarkdownRendererServer from '../Editor/MarkdownRendererServer'
+import MarkdownRenderer from '../Editor/MarkdownRenderer'
+import AttestationDrawer from './Attestation/AttestationDrawer'
+import { useState, useCallback } from 'react'
+import { useContentRef } from '../common/Layout/ReadLayout/Content/context'
 
 interface Props {
   nft: NFTWithMetadata
@@ -11,29 +15,31 @@ interface Props {
 }
 
 export default function ClientTokenViewer({ nft, token }: Props) {
-  // const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
-  //   null
-  // )
+  const { setContentElem } = useContentRef()
 
-  // const handleSelectSection = useCallback((sectionId: string) => {
-  //   setSelectedSectionId(sectionId)
-  // }, [])
+  const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
+    null
+  )
 
-  // const handleCloseDrawer = useCallback(() => {
-  //   setSelectedSectionId(null)
-  // }, [])
+  const handleSelectSection = useCallback((sectionId: string) => {
+    setSelectedSectionId(sectionId)
+  }, [])
+
+  const handleCloseDrawer = useCallback(() => {
+    setSelectedSectionId(null)
+  }, [])
 
   return (
     <>
-      {/* <MarkdownRenderer
+      <MarkdownRenderer
         markdown={token.ipfsContent?.htmlContent || ''}
         showComments
         fullTokenId={token.id}
-        onClickComment={handleSelectSection} // интерактивность
-      /> */}
-      <MarkdownRendererServer markdown={token.ipfsContent?.htmlContent || ''} />
+        onClickComment={handleSelectSection}
+        ref={setContentElem}
+      />
 
-      {/* <AttestationDrawer
+      <AttestationDrawer
         nft={nft}
         isOpen={!!selectedSectionId}
         fullTokenId={token.id}
@@ -45,7 +51,7 @@ export default function ClientTokenViewer({ nft, token }: Props) {
             '',
         }}
         onClose={handleCloseDrawer}
-      /> */}
+      />
     </>
   )
 }
