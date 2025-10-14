@@ -1,34 +1,59 @@
-import { getNftBySlugOrAddress } from 'src/services/apollo/getNftBySlugOrAddress'
-import { getTokenBySlug } from 'src/services/apollo/getTokenBySlug'
-import { ReadParams } from 'src/shared/consts/routes'
-import { findFirstNonGroupVisibleNode } from 'src/shared/utils/treeHelpers'
-import ClientTokenViewer from '../Token/ClientTokenViewer'
-import initTranslations from 'src/config/i18n/i18n'
+'use client'
 
-const NftReadPage: React.FC<{
-  params?: Promise<ReadParams['token']>
-}> = async ({ params: paramsProp }) => {
-  const params = await paramsProp
-  const nftIdOrSlug = params?.nftIdOrSlug || ''
-  const tokenIdOrSlug = params?.tokenIdOrSlug || ''
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useReadContext } from '../common/Layout/ReadLayout/ClientReadLayout'
+import { useContentRef } from '../common/Layout/ReadLayout/Content/context'
+import MarkdownRenderer from '../Editor/MarkdownRenderer'
+import AttestationDrawer from '../Token/Attestation/AttestationDrawer'
 
-  const { t } = await initTranslations('en', ['token'])
+const NftReadPage = () => {
+  const { setContentElem } = useContentRef()
+  const { nft, selectedToken } = useReadContext()
 
-  const { nft } = await getNftBySlugOrAddress(nftIdOrSlug)
+  const { t } = useTranslation('token')
 
-  const firstToken = findFirstNonGroupVisibleNode(
-    nft?.indexPagesContent?.indexPages
+  const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
+    null
   )
 
-  const { token } = await getTokenBySlug(
-    nft?.id || '',
-    tokenIdOrSlug || firstToken?.slug
-  )
+  const handleSelectSection = useCallback((sectionId: string) => {
+    setSelectedSectionId(sectionId)
+  }, [])
 
-  if (!nft || !token) {
-    return <p className='text-center'>{t('messages.noContent')}</p>
+  const handleCloseDrawer = useCallback(() => {
+    setSelectedSectionId(null)
+  }, [])
+
+  if (!nft || !selectedToken) {
+    return <div className='text-center'>{t('messages.noContent')}</div>
   }
 
-  return <ClientTokenViewer nft={nft} token={token} />
+  return (
+    <>
+      <MarkdownRenderer
+        markdown={selectedToken?.ipfsContent?.htmlContent || ''}
+        showComments
+        fullTokenId={selectedToken?.id}
+        onClickComment={handleSelectSection}
+        ref={setContentElem}
+      />
+
+      <AttestationDrawer
+        nft={nft}
+        isOpen={!!selectedSectionId}
+        fullTokenId={selectedToken?.id || ''}
+        section={{
+          id: selectedSectionId || '',
+          htmlContent:
+            (selectedSectionId &&
+              document.getElementById(selectedSectionId)?.outerHTML) ||
+            '',
+        }}
+        onClose={handleCloseDrawer}
+      />
+    </>
+  )
 }
+
 export default NftReadPage

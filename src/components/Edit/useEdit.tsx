@@ -29,10 +29,10 @@ import { PreparedTransaction } from 'thirdweb'
 import { useIpfsUpload } from 'src/hooks/web3/useIpfsUpload'
 import useSX1155NFT from 'src/hooks/contracts/nft/useSX1155NFT'
 import useSendBatchTxs from 'src/hooks/web3/useSendBatchTxs'
-import RoutePaths from 'src/shared/enums/routes-paths'
 import { useTranslation } from 'react-i18next'
 import Routes from 'src/shared/consts/routes'
 import Link from 'next/link'
+import useActiveOrDefaultChain from 'src/hooks/web3/useActiveOrDefaultChain'
 
 const useEdit = (readonly?: boolean) => {
   const { t } = useTranslation('common')
@@ -41,6 +41,7 @@ const useEdit = (readonly?: boolean) => {
     fetchFullData: true,
   })
   const account = useActiveAccount()
+  const chain = useActiveOrDefaultChain()
 
   const {
     editedTokens,
@@ -327,7 +328,10 @@ const useEdit = (readonly?: boolean) => {
         }
       }
 
-      const siteUrl = Routes.read.nft(nft?.slug || nftId)
+      const siteUrl = Routes.read.nft(
+        nft?.slug || nftId,
+        chain.name?.toLowerCase()
+      )
 
       const receipt = await sendBatchTxs(txs, {
         successMessage: (

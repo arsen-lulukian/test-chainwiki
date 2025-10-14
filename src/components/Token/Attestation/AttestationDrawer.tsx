@@ -33,6 +33,7 @@ const AttestationDrawer: React.FC<AttestationDrawerProps> = ({
   const { fullComments } = useComments(
     {
       variables: { filter: { sectionId: section.id } },
+      skip: !section.id,
     },
     { fetchFullData: true }
   )
@@ -74,11 +75,7 @@ const AttestationDrawer: React.FC<AttestationDrawerProps> = ({
           />
         </div>
         <div className='flex flex-col'>
-          <LiteEditor
-            height={200}
-            onChange={handleChangeEditor}
-            value={editorContent}
-          />
+          <LiteEditor onChange={handleChangeEditor} content={editorContent} />
           <MakeAttestationButton
             onSuccess={handleSendAttestation}
             nftAddress={nft.id}
