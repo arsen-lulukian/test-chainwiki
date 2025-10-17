@@ -3,10 +3,10 @@ name: Create Release on Master
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout
+      # 1. Checkout всего репозитория (включая все теги)
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # важно для тегов
 
       # 2. Настройка Git
       - name: Setup Git
@@ -24,7 +26,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # 3. Определяем следующий тег
+      # 3. Определяем следующий тег (увеличение патча)
       - name: Get next version
         id: vars
         run: |
@@ -40,11 +42,13 @@ jobs:
       - name: Push new tag
         run: |
           git tag $NEXT_TAG
-          git push https://$PAT_TOKEN@github.com/${{ github.repository }} $NEXT_TAG
+          # Меняем URL remote на PAT
+          git remote set-url origin https://$PAT_TOKEN@github.com/${{ github.repository }}
+          git push origin $NEXT_TAG
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
-      # 5. Создаём релиз на основе тега
+      # 5. Создаём GitHub Release
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
