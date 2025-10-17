@@ -3,10 +3,10 @@ name: Create Release on Master
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -18,13 +18,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Set up Git (если нужен для тегов)
-      - name: Set up Git
+      # 2. Настроим Git с токеном
+      - name: Setup Git for tagging
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # 3. Determine next version (пример: автоматически увеличить патч)
+      # 3. Определяем новый тег (увеличиваем патч)
       - name: Get next version
         id: vars
         run: |
@@ -36,14 +36,14 @@ jobs:
           echo "Next tag: $NEXT_TAG"
           echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
 
-      # 4. Create new tag
-      - name: Create Tag
+      # 4. Создаём тег и пушим его через GITHUB_TOKEN
+      - name: Push new tag
         run: |
           git tag $NEXT_TAG
-          git push origin $NEXT_TAG
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} $NEXT_TAG
 
-      # 5. Create GitHub release
-      - name: Create Release
+      # 5. Создаём релиз на основе тега
+      - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ env.NEXT_TAG }}
